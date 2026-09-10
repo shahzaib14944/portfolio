@@ -354,6 +354,48 @@
   }
   .project-card.featured .shot-strip img{ height:190px; }
 
+  .web-project-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .web-project-card:hover{
+    border-color:rgba(95,230,176,0.35);
+    background:var(--surface-hover);
+  }
+  .web-shot-strip{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:thin;
+    scrollbar-color:var(--border) transparent;
+  }
+  .web-shot-strip::-webkit-scrollbar{ height:5px; }
+  .web-shot-strip::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+  .web-shot-strip img{
+    height:210px;
+    width:auto;
+    flex-shrink:0;
+    border-radius:8px;
+    border:1px solid var(--border);
+    cursor:zoom-in;
+    transition:border-color .18s ease, transform .18s ease;
+    background:var(--bg-alt);
+  }
+  .web-shot-strip img:hover{
+    border-color:var(--accent);
+    transform:translateY(-2px);
+  }
+  @media (max-width:640px){
+    .web-shot-strip img{ height:150px; }
+  }
+
   .lightbox{
     position:fixed;
     inset:0;
@@ -654,6 +696,7 @@
     <div class="nav-mark"><span class="dot"></span>SHAHZAIB.KHAN</div>
     <nav class="nav-links">
       <a href="#work">Work</a>
+      <a href="#web-work">Web</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#open-source">Open Source</a>
@@ -840,10 +883,10 @@
         </div>
         <p class="project-desc">Digital signage app for restaurant TV screens, replacing static displays with dynamic video content — dish highlights, ambiance reels, and event promos — with remote content management and easy playback control.</p>
         <div class="shot-strip" data-gallery="signage">
-          <img src="assets/img/signage-1.webp" loading="lazy" alt="Indolj Signage app screenshot 1" data-index="0">
-          <img src="assets/img/signage-2.webp" loading="lazy" alt="Indolj Signage app screenshot 2" data-index="1">
-          <img src="assets/img/signage-3.webp" loading="lazy" alt="Indolj Signage app screenshot 3" data-index="2">
-          <img src="assets/img/signage-4.webp" loading="lazy" alt="Indolj Signage app screenshot 4" data-index="3">
+          <img src="assets/img/signage-1.jpg" loading="lazy" alt="Indolj Signage app screenshot 1" data-index="0">
+          <img src="assets/img/signage-2.jpg" loading="lazy" alt="Indolj Signage app screenshot 2" data-index="1">
+          <img src="assets/img/signage-3.jpg" loading="lazy" alt="Indolj Signage app screenshot 3" data-index="2">
+          <img src="assets/img/signage-4.jpg" loading="lazy" alt="Indolj Signage app screenshot 4" data-index="3">
         </div>
         <div class="tag-row">
           <span class="tag">React Native</span>
@@ -853,6 +896,34 @@
         <a class="project-link" href="https://play.google.com/store/apps/details?id=com.indoljtv&hl=en" target="_blank" rel="noopener">View on Google Play →</a>
       </div>
 
+    </div>
+  </section>
+
+  <section id="web-work">
+    <div class="eyebrow">Web Projects</div>
+    <h2 class="section-title">Beyond mobile — a full-stack ERP built for a B2B distribution business.</h2>
+
+    <div class="web-project-card">
+      <div class="project-top">
+        <div>
+          <div class="project-name">Luck Trade — Inventory &amp; Finance ERP</div>
+          <div class="project-org">Admin Portal · B2B Solar Distribution</div>
+        </div>
+        <span class="platform-badge">Web · React</span>
+      </div>
+      <p class="project-desc">Full-stack admin portal for a solar equipment distributor — inventory and SKU management, vendor and customer records, invoicing, purchase orders, delivery challans, and payment receipts, with role-based access across admin, cashier, and finance workflows. Led the frontend build.</p>
+      <div class="web-shot-strip" data-gallery="lucktrade">
+        <img src="assets/img/lucktrade-1.jpg" loading="lazy" alt="Luck Trade dashboard screenshot" data-index="0">
+        <img src="assets/img/lucktrade-2.jpg" loading="lazy" alt="Luck Trade product inventory screenshot" data-index="1">
+        <img src="assets/img/lucktrade-3.jpg" loading="lazy" alt="Luck Trade login screen screenshot" data-index="2">
+      </div>
+      <div class="tag-row">
+        <span class="tag">React</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">Vite</span>
+        <span class="tag">Role-based Access</span>
+      </div>
+      <a class="project-link" href="https://lucktrade-bo.dev.sunbonn.com/dashboard" target="_blank" rel="noopener">View live →</a>
     </div>
   </section>
 
@@ -1055,7 +1126,7 @@
   let currentIndex = 0;
 
   function openLightbox(galleryName, index){
-    const imgs = document.querySelectorAll(`.shot-strip[data-gallery="${galleryName}"] img`);
+    const imgs = document.querySelectorAll(`.shot-strip[data-gallery="${galleryName}"] img, .web-shot-strip[data-gallery="${galleryName}"] img`);
     currentGallery = Array.from(imgs).map(img => img.src);
     currentIndex = index;
     updateLightbox();
@@ -1073,9 +1144,9 @@
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.shot-strip img').forEach(img=>{
+  document.querySelectorAll('.shot-strip img, .web-shot-strip img').forEach(img=>{
     img.addEventListener('click', ()=>{
-      const gallery = img.closest('.shot-strip').dataset.gallery;
+      const gallery = img.closest('.shot-strip, .web-shot-strip').dataset.gallery;
       const index = parseInt(img.dataset.index, 10);
       openLightbox(gallery, index);
     });
